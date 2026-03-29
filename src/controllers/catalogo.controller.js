@@ -90,6 +90,19 @@ const actualizarDepartamento = async (req, res, next) => {
   } catch (err) { next(err) }
 }
 
+// DELETE /api/catalogos/departamentos/:id
+const eliminarDepartamento = async (req, res, next) => {
+  try {
+    const { id } = req.params
+    await db.query(`DELETE FROM dim_departamento WHERE id_departamento = ?`, [id])
+    res.json({ ok: true, message: 'Departamento eliminado' })
+  } catch (err) {
+    if (err.code === 'ER_ROW_IS_REFERENCED_2')
+      return res.status(409).json({ ok: false, message: 'No se puede eliminar: tiene categorías o usuarios asociados' })
+    next(err)
+  }
+}
+
 // ── CRUD Categorías (admin) ──────────────────────────────────
 
 // POST /api/catalogos/categorias
@@ -125,6 +138,19 @@ const actualizarCategoria = async (req, res, next) => {
   } catch (err) { next(err) }
 }
 
+// DELETE /api/catalogos/categorias/:id
+const eliminarCategoria = async (req, res, next) => {
+  try {
+    const { id } = req.params
+    await db.query(`DELETE FROM dim_categoria WHERE id_categoria = ?`, [id])
+    res.json({ ok: true, message: 'Categoría eliminada' })
+  } catch (err) {
+    if (err.code === 'ER_ROW_IS_REFERENCED_2')
+      return res.status(409).json({ ok: false, message: 'No se puede eliminar: tiene tickets asociados' })
+    next(err)
+  }
+}
+
 // ── CRUD Estados (admin) ─────────────────────────────────────
 
 // POST /api/catalogos/estados
@@ -153,6 +179,19 @@ const actualizarEstado = async (req, res, next) => {
     `, [nombre, color_hex, orden, id])
     res.json({ ok: true, message: 'Estado actualizado' })
   } catch (err) { next(err) }
+}
+
+// DELETE /api/catalogos/estados/:id
+const eliminarEstado = async (req, res, next) => {
+  try {
+    const { id } = req.params
+    await db.query(`DELETE FROM dim_estado WHERE id_estado = ?`, [id])
+    res.json({ ok: true, message: 'Estado eliminado' })
+  } catch (err) {
+    if (err.code === 'ER_ROW_IS_REFERENCED_2')
+      return res.status(409).json({ ok: false, message: 'No se puede eliminar: tiene tickets asociados' })
+    next(err)
+  }
 }
 
 // ── CRUD Prioridades (admin) ─────────────────────────────────
@@ -185,10 +224,23 @@ const actualizarPrioridad = async (req, res, next) => {
   } catch (err) { next(err) }
 }
 
+// DELETE /api/catalogos/prioridades/:id
+const eliminarPrioridad = async (req, res, next) => {
+  try {
+    const { id } = req.params
+    await db.query(`DELETE FROM dim_prioridad WHERE id_prioridad = ?`, [id])
+    res.json({ ok: true, message: 'Prioridad eliminada' })
+  } catch (err) {
+    if (err.code === 'ER_ROW_IS_REFERENCED_2')
+      return res.status(409).json({ ok: false, message: 'No se puede eliminar: tiene tickets asociados' })
+    next(err)
+  }
+}
+
 module.exports = {
   roles,
-  departamentos, crearDepartamento, actualizarDepartamento,
-  categorias,    crearCategoria,    actualizarCategoria,
-  estados,       crearEstado,       actualizarEstado,
-  prioridades,   crearPrioridad,    actualizarPrioridad,
+  departamentos, crearDepartamento, actualizarDepartamento, eliminarDepartamento,
+  categorias,    crearCategoria,    actualizarCategoria,    eliminarCategoria,
+  estados,       crearEstado,       actualizarEstado,       eliminarEstado,
+  prioridades,   crearPrioridad,    actualizarPrioridad,    eliminarPrioridad,
 }

@@ -19,7 +19,8 @@ router.post('/departamentos',
   [body('nombre').notEmpty().trim().withMessage('Nombre requerido'), validate],
   ctrl.crearDepartamento
 )
-router.patch('/departamentos/:id', authorize('admin'), ctrl.actualizarDepartamento)
+router.patch('/departamentos/:id',  authorize('admin'), ctrl.actualizarDepartamento)
+router.delete('/departamentos/:id', authorize('admin'), ctrl.eliminarDepartamento)
 
 // ── Categorías (admin) ───────────────────────────────────────
 router.post('/categorias',
@@ -31,7 +32,8 @@ router.post('/categorias',
   ],
   ctrl.crearCategoria
 )
-router.patch('/categorias/:id', authorize('admin'), ctrl.actualizarCategoria)
+router.patch('/categorias/:id',  authorize('admin'), ctrl.actualizarCategoria)
+router.delete('/categorias/:id', authorize('admin'), ctrl.eliminarCategoria)
 
 // ── Estados (admin) ──────────────────────────────────────────
 router.post('/estados',
@@ -39,7 +41,8 @@ router.post('/estados',
   [body('nombre').notEmpty().trim().withMessage('Nombre requerido'), validate],
   ctrl.crearEstado
 )
-router.patch('/estados/:id', authorize('admin'), ctrl.actualizarEstado)
+router.patch('/estados/:id',  authorize('admin'), ctrl.actualizarEstado)
+router.delete('/estados/:id', authorize('admin'), ctrl.eliminarEstado)
 
 // ── Prioridades (admin) ──────────────────────────────────────
 router.post('/prioridades',
@@ -47,7 +50,8 @@ router.post('/prioridades',
   [body('nombre').notEmpty().trim().withMessage('Nombre requerido'), validate],
   ctrl.crearPrioridad
 )
-router.patch('/prioridades/:id', authorize('admin'), ctrl.actualizarPrioridad)
+router.patch('/prioridades/:id',  authorize('admin'), ctrl.actualizarPrioridad)
+router.delete('/prioridades/:id', authorize('admin'), ctrl.eliminarPrioridad)
 
 module.exports = router
 

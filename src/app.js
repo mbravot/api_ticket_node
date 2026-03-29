@@ -8,6 +8,7 @@ const ticketRoutes   = require('./routes/ticket.routes')
 const usuarioRoutes  = require('./routes/usuario.routes')
 const catalogoRoutes = require('./routes/catalogo.routes')
 const reporteRoutes  = require('./routes/reporte.routes')
+const adjuntoRoutes  = require('./routes/adjunto.routes')
 const { errorHandler } = require('./middlewares/error')
 
 // Inicializar conexión DB al arrancar
@@ -28,6 +29,7 @@ app.use('/api/tickets',   ticketRoutes)
 app.use('/api/usuarios',  usuarioRoutes)
 app.use('/api/catalogos', catalogoRoutes)
 app.use('/api/reportes',  reporteRoutes)
+app.use('/api',           adjuntoRoutes)
 
 // Health check
 app.get('/api/health', (req, res) => {
